@@ -84,3 +84,13 @@ AND movieid IN
 INNER JOIN casting ON movie.id=movieid
 INNER JOIN actor ON actorid=actor.id
 WHERE name='Art Garfunkel')
+
+JOIN Quiz 2
+1. 3
+2. 5
+3. 3
+4. 2
+5. 4
+6. 3
+7. 2
+
