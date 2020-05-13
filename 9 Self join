@@ -1,1 +1,67 @@
+1.
+SELECT COUNT(*) FROM stops
+
+2.
+SELECT id FROM stops WHERE name = 'Craiglockhart'
+
+3.
+SELECT stops.id, stops.name FROM stops 
+INNER JOIN route ON stop=stops.id
+WHERE num = '4'
+AND company = 'LRT'
+
+4.
+SELECT company, num, COUNT(*)
+FROM route WHERE stop=149 OR stop=53
+GROUP BY company, num
+HAVING COUNT(*) = 2
+
+5.
+SELECT a.company, a.num, a.stop, b.stop
+FROM route a JOIN route b ON
+  (a.company=b.company AND a.num=b.num)
+WHERE a.stop= 53 AND b.stop = 149
+
+6.
+SELECT a.company, a.num, stopa.name, stopb.name
+FROM route a JOIN route b ON
+  (a.company=b.company AND a.num=b.num)
+  JOIN stops stopa ON (a.stop=stopa.id)
+  JOIN stops stopb ON (b.stop=stopb.id)
+WHERE stopa.name='Craiglockhart'
+AND stopb.name='London Road'
+
+7.
+SELECT DISTINCT route .company, route .num
+FROM route JOIN route route1 ON route.company= route1.company AND route.num= route1.num
+WHERE route.stop=115 AND route1.stop = 137
+
+8.
+SELECT route .company, route .num
+FROM stops INNER JOIN route ON stops.id=route.stop INNER JOIN route route1 ON route.company= route1.company AND route.num= route1.num
+INNER JOIN stops stops1 ON route1.stop = stops1.id
+WHERE stops.name='Craiglockhart' AND stops1.name = 'Tollcross'
+
+9.
+SELECT DISTINCT   stops1.name,  route.company , route.num
+FROM stops INNER JOIN route ON stops.id = route.stop
+INNER JOIN route route1 ON route.num=route1.num AND route.company = route1.company
+INNER JOIN stops stops1 ON route1.stop = stops1.id
+WHERE   stops.name = 'Craiglockhart' AND route.company = 'LRT'
+
+10.
+SELECT DISTINCT route.num, route.company, stops1.name, route3.num, route3.company
+
+FROM stops 
+INNER JOIN route ON stops.id = route.stop
+INNER JOIN route route1 ON route.num = route1.num AND route.company = route1.company
+INNER JOIN stops stops1 ON route1.stop= stops1.id
+
+INNER JOIN route route2 ON stops1.id = route2.stop
+INNER JOIN route route3 ON route2.num = route3.num AND route2.company = route3.company
+INNER JOIN stops stops2 ON route3.stop= stops2.id
+
+WHERE stops.name = 'Craiglockhart'  AND stops2.name = 'Lochend'  
+
+ORDER BY route.num, stops1.name, route3.num
 
